@@ -1,4 +1,9 @@
+# Fichiers de données et modèles locaux
+simulation/fleet_data.csv
+ml_model/model.pkl
+
+# Cache Python et environnements virtuels
 __pycache__/
 .venv/
-*.pkl
-*.joblib
+venv/
+*.pyc
