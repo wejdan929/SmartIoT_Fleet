@@ -1,19 +1,29 @@
-# 🚚 SmartIoT Fleet - Maintenance Prédictive & Monitoring IoT
+# 🚛 SmartIoT Fleet — Predictive Maintenance & Real-Time Monitoring
 
-> Projet personnel de simulation IoT, d'entraînement de modèle de Machine Learning et de supervision de flotte en temps réel.
+**SmartIoT Fleet** est une plateforme end-to-end de suivi télémétrique et de maintenance prédictive pour flottes de véhicules connectés. 
 
-## 📋 À propos du projet
-**SmartIoT Fleet** est une application complète de veille et de maintenance prédictive pour une flotte de véhicules connectés. Le système simule en continu des capteurs embarqués (température moteur, vibrations, vitesse), analyse les risques d'anomalies à l'aide d'un modèle d'intelligence artificielle supervisée, et restitue le tout sur un tableau de bord interactif.
+Le système simule l'acquisition de données capteurs à bord (vitesse, température, vibrations), orchestre la communication en temps réel via un bus MQTT, et intègre un modèle de Machine Learning pour la détection précoce des pannes logistiques.
 
-## 🛠️ Architecture du Projet
+---
+
+## 🎯 Problématique & Solution
+
+Dans le transport et la logistique, une panne non anticipée entraîne des coûts d'immobilisation élevés. **SmartIoT Fleet** répond à ce besoin en combinant :
+- **Supervision temps réel (Event-Driven) :** Capture et filtrage continu des anomalies sur le réseau IoT.
+- **Inférence par API REST :** Exposition du modèle prédictif pour l'interconnexion avec d'autres systèmes décisionnels.
+- **Visualisation dynamique :** Suivi des indicateurs clés via un tableau de bord interactif.
+
+---
+
+## 🏗️ Architecture Technique
+
 ```text
-SmartIoT_Fleet/
-│
-├── simulation/
-│   └── simulator.py     # Générateur de flux de données IoT en temps réel
-├── ml_model/
-│   └── train_model.py   # Script d'entraînement du modèle (Random Forest)
-├── dashboard/
-│   └── app.py           # Tableau de bord web interactif (Streamlit)
-├── .gitignore
-└── README.md
+[ Capteurs Véhicule ] ──(MQTT / Port 1883)──> [ Broker Pub/Sub (HiveMQ) ]
+                                                       │
+                                 ┌─────────────────────┴─────────────────────┐
+                                 ▼                                           ▼
+                     [ alert_subscriber.py ]                        [ API FastAPI ]
+                     (Filtrage & Alertes Temps Réel)              (Endpoint /predict)
+                                                                             │
+                                                                             ▼
+                                                                    [ Modèle Scikit-Learn ]
